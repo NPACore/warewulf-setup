@@ -11,12 +11,27 @@ virsh net-update default add ip-dhcp-host \
 
 https://warewulf.org/docs/main/getting-started/debian-quickstart.html
 
-connect
-virsh console head
+connect: virsh console head
+
+* current config
+on =cerebro2=
+#+begin_src bash :dir /ssh:cerebro2:
+ip addr |grep -Po '(?<=inet )[0-9.]+'
+#+end_src
+  127.0.0.1
+  10.141.255.253
+  10.148.255.250
+  10.48.88.160
+  192.168.122.1
 
 
-  <filesystem type='mount' accessmode='passthrough'>
-      <driver type='virtiofs' queue='1024'/>
-      <source dir='/path'/>
-      <target dir='mount_tag'/>
-    </filesystem>
+node01: 10.141.0.1
+
+sudo pdsh -w node[01-08] ip addr |grep -Po '(?<=inet )[0-9.]+'|grep -v ^127 |sort
+10.141.0.1
+10.141.0.2
+10.141.0.3
+10.141.0.4
+10.141.0.6
+10.141.0.7
+
