@@ -1,0 +1,22 @@
+ virsh console head
+
+2025-05-14: virsh to create debian VM from install iso
+2025-05-21: should've considered https://cloud.debian.org/images/cloud/'s [[https://cloud.debian.org/images/cloud/bookworm-backports/20250428-2096/debian-12-backports-genericcloud-amd64-20250428-2096.qcow2][debian-12-backports-genericcloud-amd64-20250428-2096.qcow2]] as a base VM.
+
+
+https://askubuntu.com/questions/576437/virsh-ssh-into-a-guest-vm
+virsh net-update default add ip-dhcp-host \
+    "<host mac='52:54:00:11:22:33' name='buildserver' ip='192.168.122.123'/>" \
+    --config
+
+https://warewulf.org/docs/main/getting-started/debian-quickstart.html
+
+connect
+virsh console head
+
+
+  <filesystem type='mount' accessmode='passthrough'>
+      <driver type='virtiofs' queue='1024'/>
+      <source dir='/path'/>
+      <target dir='mount_tag'/>
+    </filesystem>
