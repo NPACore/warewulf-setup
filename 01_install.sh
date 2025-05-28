@@ -12,3 +12,6 @@ test -d warewulf || git clone https://github.com/warewulf/warewulf.git
 cd warewulf
 git checkout main
 make all && make install
+
+# start service
+systemctl enable --now warewulfd
