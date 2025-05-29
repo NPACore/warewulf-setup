@@ -16,7 +16,8 @@ command -v  go ||
   dryrun apt install \
     nfs-kernel-server tftpd-hpa isc-dhcp-server \
     build-essential curl unzip \
-    git golang libnfs-utils libgpgme-dev libassuan-dev
+    git golang libnfs-utils libgpgme-dev libassuan-dev \
+    slurm
 
 # dhcpcd in qemu failing
 # > No subnet declaration for enp1s0 (10.0.2.15).

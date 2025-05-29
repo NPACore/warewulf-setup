@@ -10,6 +10,7 @@ virsh net-update default add ip-dhcp-host \
     --config
 
 https://warewulf.org/docs/main/getting-started/debian-quickstart.html
+https://warewulf.org/docs/main/images/images.html
 
 connect: virsh console head
 
