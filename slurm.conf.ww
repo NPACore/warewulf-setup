@@ -107,12 +107,14 @@ SelectTypeParameters=CR_Core_Memory
 # Memory from 
 #  sudo pdsh -w node[01-04,06-07] -- free -m |awk '(/Mem/){print $1,$3}'
 # NB. node7 has 1/2 of the others!?
-NodeName=cerebro2 Procs=16 Sockets=2 CoresPerSocket=8 ThreadsPerCore=1 RealMemory=257905
-NodeName=node[01-04,06] Procs=16 Sockets=2 CoresPerSocket=8 ThreadsPerCore=1 RealMemory=257926 
+# 20250605: CoreSpecCount added for cerebro2. reserve half the total cores and 16Gb RAM for system.
+#  'scontrol show node cerebro2': CPUEfctv=8
+NodeName=cerebro2 Procs=16 Sockets=2 CoresPerSocket=8 ThreadsPerCore=1 RealMemory=257905 CoreSpecCount=8 MemSpecLimit=16384
+NodeName=node[01-04,06] Procs=16 Sockets=2 CoresPerSocket=8 ThreadsPerCore=1 RealMemory=257905
 NodeName=node07 Procs=16 Sockets=2 CoresPerSocket=8 ThreadsPerCore=1 RealMemory=128902 
 # Partitions
 PartitionName=defq Default=YES MinNodes=1 AllowGroups=ALL PriorityJobFactor=1 PriorityTier=1 PreemptMode=OFF AllowAccounts=ALL AllowQos=ALL Nodes=node[01-04,06-07],cerebro2 OverSubscribe=YES
-PartitionName=head Default=NO MinNodes=1 AllowGroups=ALL PriorityJobFactor=1 PriorityTier=1 PreemptMode=OFF AllowAccounts=ALL AllowQos=ALL Nodes=cerebro2 OverSubscribe=YES MaxCPUsPerNode=10
+#PartitionName=head Default=NO MinNodes=1 AllowGroups=ALL PriorityJobFactor=1 PriorityTier=1 PreemptMode=OFF AllowAccounts=ALL AllowQos=ALL Nodes=cerebro2 OverSubscribe=YES MaxCPUsPerNode=10
 # Satesave
 #StateSaveLocation=/cm/shared/apps/slurm/var/cm/statesave/slurm
 # 20250604 - should be somewhere persistant?
