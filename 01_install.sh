@@ -67,9 +67,16 @@ dryrun wwctl node add node0[2-4] --ipaddr=10.141.0.2 --discoverable=true
 #dryrun wwctl overlay build
 # creates debian-12.0.img
 #dryrun wwctl image exec debian-12.0 '/bin/ls'
+
+# edit allow root login editting service
 #https://kb.ciq.com/article/warewulf/ww-set-root-password
 dryrun wwctl image exec debian-12.0 -- /usr/bin/passwd root
-# edit allow root login editting service
+# also maybe edit /etc/ssh/sshd_config to PermitRoot yes
+
 dryrun wwctl overlay edit wwclient etc/systemd/system/wwclient.service
 
+wwctl image exec debian-12.0 -- /usr/bin/bash -c '/usr/bin/apt update && usr/bin/apt install slurmd gdisk ignition nano && systemctl enable slurmd'
 dryrun wwctl overlay build
+
+dryrun ln -s /etc/passwd /usr/local/etc/
+dryrun wwctl image syncuser debian-12 --build
