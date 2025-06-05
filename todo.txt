@@ -1,0 +1,7 @@
+ * mount with ignition
+   - sda1 / (?)
+   - sda5 swap
+   - sda6 /scratch
+
+ * move slurm off of /opt onto /var/slurm ?
+   /opt should be ro?

@@ -1,0 +1,16 @@
+[Unit]
+Description=Warewulf node runtime overlay update
+After=network.target
+After=local-fs.target
+
+[Service]
+Type=notify
+EnvironmentFile=-/etc/default/wwclient
+# NB. looking for /usr/local/etc/warewulf/warewulf.conf as is in head node?
+ExecStart=/warewulf/wwclient --warewulfconf /etc/warewulf/warewulf.conf
+ExecReload=/bin/kill -s SIGHUP "$MAINPID"
+PIDFile=/var/run/wwclient.pid
+TimeoutSec=60
+
+[Install]
+WantedBy=multi-user.target
