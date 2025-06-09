@@ -1,7 +1,14 @@
  * mount with ignition
-   - sda1 / (?)
+   - sda1 / (?) -- maybe root is needed for boot (old brightview config)
    - sda5 swap
    - sda6 /scratch
 
  * move slurm off of /opt onto /var/slurm ?
    /opt should be ro?
+
+ * try FW engine on CRC
+
+ * report wwinit service issue? 50-server.cnf
+
+ node03 last boot at   (uptime -s) 2025-06-05 16:53:01
+

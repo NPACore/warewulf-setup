@@ -80,3 +80,7 @@ dryrun wwctl overlay build
 
 dryrun ln -s /etc/passwd /usr/local/etc/
 dryrun wwctl image syncuser debian-12 --build
+
+## NAT network
+sysctl net.ipv4.ip_forward=1
+dryrun iptables -t nat -A POSTROUTING -s 10.141.0.0/16 -o enp6s0f1 -j MASQUERADE

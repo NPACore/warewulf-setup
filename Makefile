@@ -9,10 +9,15 @@ OVDIR := /var/local/warewulf/overlays
 	cp $< $@
 
 # see 02_slurm_overlay.bash
-/var/local/warewulf/overlays/slurm/rootfs/etc/slurm/%: %  | /var/local/warewulf/overlays/slurm/
+$(OVDIR)/slurm/rootfs/etc/slurm/%: %  | $(OVDIR)/slurm/
 	cp $< $@
+$(OVDIR)/slurm/rootfs/lib/systemd/system/slurmd.service: slurmd.service  | $(OVDIR)/slurm/
+	wwctl overlay import -o slurm slurmd.service /lib/systemd/system/slurmd.service
+
+# bug? client looking in /var/local/etc instead of /etc
 /var/local/warewulf/overlays/wwclient/rootfs/etc/systemd/system/wwclient.service: wwclient.service
 	cp $< $@
+
 # time keeping (also 02_slurm_overlay.bash)
 $(OVDIR)/chrony/rootfs/etc/chrony/chrony.conf: chrony.conf | /var/local/warewulf/overlays/chrony/rootfs/etc/chrony/
 	cp $< $@
@@ -41,9 +46,9 @@ nodes.conf: /usr/local/etc/warewulf/nodes.conf
 exports.cerebro2: /etc/exports
 	cp $< $@
 ###
-.make/overlay.date:  nodes.conf $(OVDIR)/slurm/rootfs/etc/slurm/cgroup.conf $(OVDIR)/slurm/rootfs/etc/slurm/slurm.conf.ww \
-	$(OVDIR)/chrony/rootfs/etc/chrony/chrony.conf \
-	$(OVDIR)/chrony/rootfs/etc/chrony/chrony.key \
+.make/overlay.date:  nodes.conf \
+	$(OVDIR)/slurm/rootfs/etc/slurm/cgroup.conf $(OVDIR)/slurm/rootfs/etc/slurm/slurm.conf.ww $(OVDIR)/slurm/rootfs/lib/systemd/system/slurmd.service \
+	$(OVDIR)/chrony/rootfs/etc/chrony/chrony.conf $(OVDIR)/chrony/rootfs/etc/chrony/chrony.keys \
 	| .make/
 	wwctl overlay build
 	date >$@
@@ -54,6 +59,9 @@ exports.cerebro2: /etc/exports
 	wwctl overlay mkdir slurm /etc
 	wwctl overlay import slurm slurm.conf.ww /etc/slurm.conf.ww
 	wwctl overlay import slurm /etc/munge/munge.key
+	# for modified service overlay
+	wwctl overlay mkdir slurm /lib/systemd/system/
+
 /var/local/warewulf/overlays/chrony/rootfs/etc/chrony/:
 	wwctl overlay create chrony -dv
 	wwctl overlay mkdir chrony /etc/chrony

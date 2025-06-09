@@ -9,6 +9,10 @@
 /etc/passwd 10.141.0.0/255.255.252.0(ro,sync,no_root_squash)
 /etc/group  10.141.0.0/255.255.252.0(ro,sync,no_root_squash)
 
+# giant storage
+#  results in nfs-server.service: Transaction order is cyclic
+# /raidzeus 10.141.0.0/255.255.252.0(rw,sync,no_root_squash)
+
 # GUIX
 /gnu/store 10.141.0.0/255.255.252.0(ro,no_subtree_check,no_root_squash,async) 0.0.0.0/0(ro,no_subtree_check,no_root_squash,async) 10.48.0.0/16(ro,no_subtree_check,no_root_squash,async)
 /var/guix 10.141.0.0/255.255.252.0(rw,no_subtree_check,no_root_squash,async,async) 10.48.0.0/16(ro,no_subtree_check,no_root_squash,async)
