@@ -11,13 +11,14 @@
 ! [[ $UID == 0 ]] && echo "run as root/with sudo" && exit 1
 dryrun() { [ -z "${DRYRUN:-}" ] && DRYRUN= || DRYRUN="echo";  $DRYRUN "$@"; return $?; }
 
-# depends. NB. skipping firewalld for now
+# depends. NB. skipping firewalld for now. iptables-persistent for nat forwarding. see cerebro2.iptables
 command -v  go ||
   dryrun apt install \
     nfs-kernel-server tftpd-hpa isc-dhcp-server \
     build-essential curl unzip \
     git golang libnfs-utils libgpgme-dev libassuan-dev \
-    slurmd slurmctld
+    slurmd slurmctld \
+    iptables-persistent
 
 # dhcpcd in qemu failing
 # > No subnet declaration for enp1s0 (10.0.2.15).
