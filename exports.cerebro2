@@ -15,5 +15,5 @@
 
 # GUIX
 /gnu/store 10.141.0.0/255.255.252.0(ro,no_subtree_check,no_root_squash,async) 0.0.0.0/0(ro,no_subtree_check,no_root_squash,async) 10.48.0.0/16(ro,no_subtree_check,no_root_squash,async)
-/var/guix 10.141.0.0/255.255.252.0(rw,no_subtree_check,no_root_squash,async,async) 10.48.0.0/16(ro,no_subtree_check,no_root_squash,async)
-/var/log/guix 10.141.0.0/255.255.252.0(ro,no_subtree_check,no_root_squash,async) 10.48.0.0/16(ro,no_subtree_check,no_root_squash,async)
+/var/guix 10.141.0.0/255.255.252.0(rw,no_subtree_check,no_root_squash,async,async) 10.48.0.0/16(rw,no_subtree_check,no_root_squash,async)
+/var/log/guix 10.141.0.0/255.255.252.0(rw,no_subtree_check,no_root_squash,async) 10.48.0.0/16(rw,no_subtree_check,no_root_squash,async)

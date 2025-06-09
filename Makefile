@@ -11,8 +11,8 @@ OVDIR := /var/local/warewulf/overlays
 # see 02_slurm_overlay.bash
 $(OVDIR)/slurm/rootfs/etc/slurm/%: %  | $(OVDIR)/slurm/
 	cp $< $@
-$(OVDIR)/slurm/rootfs/lib/systemd/system/slurmd.service: slurmd.service  | $(OVDIR)/slurm/
-	wwctl overlay import -o slurm slurmd.service /lib/systemd/system/slurmd.service
+$(OVDIR)/slurm/rootfs/etc/systemd/system/slurmd.service: slurmd.service  | $(OVDIR)/slurm/
+	wwctl overlay import -o slurm slurmd.service  etc/systemd/system/slurmd.service
 
 # bug? client looking in /var/local/etc instead of /etc
 /var/local/warewulf/overlays/wwclient/rootfs/etc/systemd/system/wwclient.service: wwclient.service
@@ -47,7 +47,7 @@ exports.cerebro2: /etc/exports
 	cp $< $@
 ###
 .make/overlay.date:  nodes.conf \
-	$(OVDIR)/slurm/rootfs/etc/slurm/cgroup.conf $(OVDIR)/slurm/rootfs/etc/slurm/slurm.conf.ww $(OVDIR)/slurm/rootfs/lib/systemd/system/slurmd.service \
+	$(OVDIR)/slurm/rootfs/etc/slurm/cgroup.conf $(OVDIR)/slurm/rootfs/etc/slurm/slurm.conf.ww $(OVDIR)/slurm/rootfs/etc/systemd/system/slurmd.service \
 	$(OVDIR)/chrony/rootfs/etc/chrony/chrony.conf $(OVDIR)/chrony/rootfs/etc/chrony/chrony.keys \
 	| .make/
 	wwctl overlay build
@@ -71,6 +71,10 @@ exports.cerebro2: /etc/exports
 cerebro2.iptables:
 	# only need to run once after command from 05_nat.bash
 	iptables-save > $@
+/etc/iptables/rules.v4: cerebro2.iptables
+	# this copy done by 'apt install iptables-persistent'
+	cp $< $@
+
 /etc/sysctl.d/99-hpc-forwarding.conf: 99-hpc-forwarding.conf
 	cp $< $@
 %/:
