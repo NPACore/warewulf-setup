@@ -68,5 +68,10 @@ exports.cerebro2: /etc/exports
 	wwctl overlay import chrony chrony.conf /etc/chrony/chrony.conf
 	wwctl image exec debian-12.0 -- apt install chrony
 
+cerebro2.iptables:
+	# only need to run once after command from 05_nat.bash
+	iptables-save > $@
+/etc/sysctl.d/99-hpc-forwarding.conf: 99-hpc-forwarding.conf
+	cp $< $@
 %/:
 	mkdir -p $@
