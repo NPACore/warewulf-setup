@@ -83,5 +83,11 @@ dryrun ln -s /etc/passwd /usr/local/etc/
 dryrun wwctl image syncuser debian-12 --build
 
 ## NAT network
-sysctl net.ipv4.ip_forward=1
+# 20250609 -- this is unnecessary!? route through the siwtch at 10.141.255.254 instead
+dryrun sysctl net.ipv4.ip_forward=1
 dryrun iptables -t nat -A POSTROUTING -s 10.141.0.0/16 -o enp6s0f1 -j MASQUERADE
+
+# access to zeus through net tag on default network profile
+# post-up is a chatgpt hallucination.thought it'd end up in /etc/network/interfaces
+# wwctl profile set --nettagadd post-up="ip route add 10.148.0.0/16 via 10.141.255.253" default
+dryrun wwctl profile set --nettagadd route1="10.148.0.0/16,10.141.255.253" default
