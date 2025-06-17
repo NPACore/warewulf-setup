@@ -76,7 +76,7 @@ dryrun wwctl image exec debian-12.0 -- /usr/bin/passwd root
 
 dryrun wwctl overlay edit wwclient etc/systemd/system/wwclient.service
 
-wwctl image exec debian-12.0 -- /usr/bin/bash -c '/usr/bin/apt update && usr/bin/apt install slurmd gdisk ignition nano && systemctl enable slurmd'
+wwctl image exec debian-12.0 -- /usr/bin/bash -c '/usr/bin/apt update && usr/bin/apt install slurmd slurm-client gdisk ignition nano && systemctl enable slurmd'
 dryrun wwctl overlay build
 
 dryrun ln -s /etc/passwd /usr/local/etc/
